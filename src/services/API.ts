@@ -1,6 +1,6 @@
 import { shuffleArray } from "../utils"
 import Config from "../QuizConfig"
-import { Difficulty } from "../enums/enums"
+import { Difficulty, Category } from "../enums/enums"
 import {Question} from "../interfaces/QuestionInterface"
 
 export type QuestionState = Question & {answers: string[]}
@@ -13,8 +13,8 @@ const randomDifficulties = (difficulty: string) => {
   return difficulty
 }
 
-export const fetchQuizQuestions =async (difficulty: Difficulty) => {
-  const endpoint = `${Config.url}limit=${Config.totalQuestions}&difficulty=${randomDifficulties(difficulty)}`
+export const fetchQuizQuestions =async (difficulty: Difficulty, category: Category) => {
+  const endpoint = `${Config.url}${category}&limit=${Config.totalQuestions}&difficulty=${randomDifficulties(difficulty)}`
   const data = await (await fetch(endpoint)).json()
   console.log(data)
   return data.map((question: Question) => ({
