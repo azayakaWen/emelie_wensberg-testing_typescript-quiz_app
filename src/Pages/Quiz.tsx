@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { fetchQuizQuestions, QuestionState } from "../services/API"
-import { Difficulty } from "../enums/QuizDifficulty"
+import { Difficulty } from "../enums/enums"
 import Config, { TOTAL_QUESTIONS } from "../QuizConfig"
-
+import { Difficulties } from "../constans/constans"
 import QuestionCard from "../components/Questioncard"
 
 export type AnswerObject = {
@@ -49,6 +49,7 @@ const Quiz = () => {
   }
 
   const handleNext = () => {
+    ;(difficulty || "easy") as Difficulty
     if (number < Config.totalQuestions - 1) setNumber((prev) => prev + 1)
     else setComplete(true)
   }
@@ -67,11 +68,10 @@ const Quiz = () => {
       {gameOver || complete ? (
         <>
           <p>Select Difficulty</p>
-          <select value={difficulty} onChange={handleDifficulty}>
-            {Object.keys(Difficulty).map((key) => (
-              //@ts-ignore
-              <option key={key} value={Difficulty[key]}>
-                {key}
+          <select onChange={handleDifficulty}>
+            {Difficulties.map((options, index) => (
+              <option value={options.id} key={index}>
+                {options.name}
               </option>
             ))}
           </select>

@@ -1,3 +1,9 @@
+export enum Difficulty {
+  EASY = 'easy',
+  MEDIUM = 'medium',
+  HARD = 'hard'
+}
+
 export enum Category {
   Artist_Literature = "Artist & Literature",
   Film_TV = "Film & TV",
