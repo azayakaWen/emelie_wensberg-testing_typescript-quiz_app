@@ -1,38 +1,49 @@
 import React from "react"
 import Config from "../QuizConfig"
 
-import { AnswerObject } from "../Pages/Quiz"
+import { AnswerType } from "../Pages/Quiz"
 
 type Props = {
   question: string
   answers: string[]
   callback: (e: React.MouseEvent<HTMLButtonElement>) => void
-  userAnswer: AnswerObject | undefined
+  userAnswer: AnswerType | undefined
   questionNr: number
   totalQuestions: number
+  quiestionCountDown: number
 }
 
 const totalQuestions = Config.totalQuestions
 
-const QuestionCard: React.FC<Props> = ({
+export const QuestionCard = ({
   question,
   answers,
   callback,
   userAnswer,
   questionNr,
-}) => {
+  quiestionCountDown,
+}: Props) => {
   return (
     <div>
       <p>
         {questionNr} / {totalQuestions}
       </p>
-      <p dangerouslySetInnerHTML={{ __html: question }} />
+
+      <p>{question}</p>
 
       <div>
-        {answers.map((answer, index) => (
-          <div key={index}>
-            <button disabled={!!userAnswer} value={answer} onClick={callback}>
-              <span dangerouslySetInnerHTML={{ __html: answer }} />
+        {answers.map((answer) => (
+          <div key={answer}>
+            <button
+              style={{
+                backgroundColor:
+                  userAnswer?.correctAnswer === answer ? "green" : "",
+              }}
+              value={answer}
+              disabled={!!userAnswer || quiestionCountDown === 0}
+              onClick={callback}
+            >
+              {answer}
             </button>
           </div>
         ))}
@@ -40,5 +51,3 @@ const QuestionCard: React.FC<Props> = ({
     </div>
   )
 }
-
-export default QuestionCard

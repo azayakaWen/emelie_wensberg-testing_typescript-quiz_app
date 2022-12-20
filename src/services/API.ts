@@ -13,8 +13,8 @@ const randomDifficulties = (difficulty: string) => {
   return difficulty
 }
 
-export const fetchQuizQuestions =async (difficulty: Difficulty, category: Category) => {
-  const endpoint = `${Config.url}${category}&limit=${Config.totalQuestions}&difficulty=${randomDifficulties(difficulty)}`
+export const fetchQuizQuestions =async (difficulty: Difficulty, categories: Category) => {
+  const endpoint = `https://the-trivia-api.com/api/questions?categories=${categories}&limit=${Config.totalQuestions}&difficulty=${randomDifficulties(difficulty)}`
   const data = await (await fetch(endpoint)).json()
   console.log(data)
   return data.map((question: Question) => ({

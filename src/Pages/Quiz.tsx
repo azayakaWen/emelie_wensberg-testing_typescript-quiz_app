@@ -1,153 +1,206 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { fetchQuizQuestions, QuestionState } from "../services/API"
 import { Difficulty, Category } from "../enums/enums"
-import Config, { TOTAL_QUESTIONS } from "../QuizConfig"
-import { Difficulties, Categories } from "../constans/constans"
-import QuestionCard from "../components/Questioncard"
+import {
+  TOTAL_QUESTIONS,
+  difficultySelections,
+  categorySelections,
+  COUNTDOWN,
+} from "../QuizConfig"
+import { QuestionCard } from "../components/Questioncard"
 
-export type AnswerObject = {
+export type AnswerType = {
   question: string
   answer: string
   correct: boolean
   correctAnswer: string
+  difficultySelections: string
 }
 
 export const Quiz = () => {
   const [questions, setQuestions] = useState<QuestionState[]>([])
   const [number, setNumber] = useState<number>(0)
-  const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([])
+  const [userAnswers, setUserAnswers] = useState<AnswerType[]>([])
   const [score, setScore] = useState<number>(0)
-  const [gameOver, setGameOver] = useState(true)
+  const [gameOver, setGameOver] = useState<boolean>(true)
   const [difficulty, setDifficulty] = useState<string>("")
   const [category, setCategory] = useState<string>("")
   const [loading, setLoading] = useState(false)
-  const [complete, setComplete] = useState<boolean>(false)
+  const [questionClock, setQuestionClock] = useState<boolean>(false)
+  const [pauseTime, setPauseTime] = useState<boolean>(false)
+  const [pauseCountDown, setPauseCountdown] = useState<number>(3)
+  const [questionCountdown, setQuestionCountdown] = useState<number>(COUNTDOWN)
 
-  // const handleDifficulty = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   //@ts-ignore
-  //   setDifficulty(e.target.value)
-  // }
+  //Give random value from list of categories
+  const randomCategories = categorySelections.sort(() => Math.random() - 0.5)
 
-  const shuffledCategories = Categories.sort(() => Math.random() - 0.5)
+  //For timer
+  useEffect(() => {
+    if (questionClock) {
+      const elapsedTime: number = 0
+      if (questionCountdown > elapsedTime) {
+        setTimeout(() => {
+          setQuestionCountdown(questionCountdown - 1)
+        }, 1000)
+      }
+    }
+  }, [questionClock, questionCountdown])
 
+  useEffect(() => {
+    if (pauseTime) {
+      const elapsedTime: number = 0
+      if (pauseCountDown > elapsedTime) {
+        setTimeout(() => {
+          setPauseCountdown(pauseCountDown - 1)
+        }, 1000)
+      }
+
+      if (pauseCountDown === elapsedTime) {
+        setPauseTime(false)
+        setPauseCountdown(3)
+      }
+    }
+  }, [pauseTime, pauseCountDown])
+
+  //When starting quiz
   const startQuiz = async () => {
+    setPauseTime(true)
     setNumber(0)
     setLoading(true)
     setGameOver(false)
-    setComplete(false)
-
+    setQuestionClock(true)
+    setQuestionCountdown(COUNTDOWN + pauseCountDown)
     if (!difficulty) {
       setDifficulty("easy")
     }
 
-    const newQuestions = await fetchQuizQuestions(
+    const newGame = await fetchQuizQuestions(
       (difficulty || "easy") as Difficulty,
       category as Category
     )
-
-    setQuestions(newQuestions)
+    setQuestions(newGame)
     setScore(0)
     setUserAnswers([])
     setLoading(false)
   }
 
+  //Check if answer is correct and handle score
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       const answer = e.currentTarget.value
+
       const correct = questions[number].correctAnswer === answer
 
-      if (correct) setScore((prev) => prev + 1)
-      setCategory("")
+      setQuestionClock(false)
+
+      if (correct) {
+        setScore((prev) => prev + 1)
+        setCategory("")
+      }
 
       const answerObject = {
         question: questions[number].question,
-        correctAnswer: questions[number].correctAnswer,
         answer,
         correct,
-        questionDifficulty: difficulty,
+        difficultySelection: difficulty,
+        correctAnswer: questions[number].correctAnswer,
       }
+      //@ts-ignore
       setUserAnswers((prev) => [...prev, answerObject])
     }
   }
 
+  //To get the next question
   const handleNext = async () => {
-    const newQuestions = await fetchQuizQuestions(
+    setPauseTime(true)
+    setNumber((prev) => prev + 1)
+    setQuestionClock(true)
+    setQuestionCountdown(COUNTDOWN + pauseCountDown)
+
+    const newGame = await fetchQuizQuestions(
       difficulty as Difficulty,
       category as Category
     )
 
-    setQuestions(newQuestions)
+    setQuestions(newGame)
 
-    if (number === Config.totalQuestions) {
+    if (number === TOTAL_QUESTIONS) {
       setGameOver(true)
     } else {
-      setComplete(true)
+      setNumber((prev) => prev)
     }
   }
 
+  //Get player name value from local storage
   const player = localStorage.getItem("user")
 
   return (
-    <div className="App">
+    <div>
       <h3>Player: {player}</h3>
+
+      {!gameOver ? <p>Score: {score}</p> : null}
+
+      {pauseTime ? (
+        <h3>{pauseCountDown}</h3>
+      ) : (
+        <>
+          {!gameOver && <h3>Time left: {questionCountdown}</h3>}
+
+          {!category && (
+            <>
+              <select onChange={(e) => setCategory(e.target.value)}>
+                <option>Select Category</option>
+                {randomCategories.slice(0, 3).map((selections, index) => (
+                  <option value={selections.id} key={index}>
+                    {selections.name}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
+        </>
+      )}
 
       {!difficulty && (
         <>
-          <p>Select Difficulty</p>
           <select onChange={(e) => setDifficulty(e.target.value)}>
-            {Difficulties.map((options, index) => (
-              <option value={options.id} key={index}>
-                {options.name}
+            <option>Select Difficulty</option>
+            {difficultySelections.map((selections, index) => (
+              <option value={selections.name} key={index}>
+                {selections.id}
               </option>
             ))}
           </select>
         </>
       )}
 
-      {!category && (
+      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <>
-          <p>Select Category</p>
-          <select onChange={(e) => setCategory(e.target.value)}>
-            {shuffledCategories.slice(0, 3).map((options, index) => (
-              <option value={options.id} key={index}>
-                {options.name}
-              </option>
-            ))}
-          </select>
+          {difficulty && category ? (
+            <button onClick={startQuiz}>Start</button>
+          ) : null}
         </>
-      )}
-      {gameOver || userAnswers.length === Config.totalQuestions ? (
-        <button
-          onClick={() => {
-            startQuiz()
-          }}
-        >
-          Start Quiz
-        </button>
       ) : null}
+
+      {loading ? <p>Loading question.....</p> : null}
 
       {!loading && !gameOver && (
         <QuestionCard
           questionNr={number + 1}
+          question={questions[number].question}
+          answers={questions[number].answers}
           totalQuestions={TOTAL_QUESTIONS}
-          question={questions[0].question}
-          answers={questions[0].answers}
           userAnswer={userAnswers ? userAnswers[number] : undefined}
           callback={checkAnswer}
+          quiestionCountDown={questionCountdown}
         />
       )}
 
       {!gameOver &&
       !loading &&
       userAnswers.length === number + 1 &&
-      number !== Config.totalQuestions - 1 ? (
-        <button
-          onClick={() => {
-            handleNext()
-          }}
-        >
-          Next Question
-        </button>
+      number !== TOTAL_QUESTIONS - 1 ? (
+        <button onClick={handleNext}>Next question</button>
       ) : null}
     </div>
   )
