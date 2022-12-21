@@ -1,7 +1,7 @@
 export enum Difficulty {
-  EASY = 'easy',
-  MEDIUM = 'medium',
-  HARD = 'hard'
+  Easy = 'Easy',
+  Medium = 'Medium',
+  Hard = 'Hard'
 }
 
 export enum Category {
