@@ -1,5 +1,6 @@
 import React from "react"
 import Config from "../QuizConfig"
+import "./ComponentsStyle.css"
 
 import { AnswerType } from "../Pages/Quiz"
 
@@ -25,16 +26,17 @@ export const QuestionCard = ({
 }: Props) => {
   return (
     <div>
-      <p>
+      <p className="amount-questions">
         {questionNr} / {totalQuestions}
       </p>
 
-      <p>{question}</p>
+      <div className="question-container">
+        <p>{question}</p>
 
-      <div>
         {answers.map((answer) => (
-          <div key={answer}>
+          <div className="answers" key={answer}>
             <button
+              className="btn-answer"
               style={{
                 backgroundColor:
                   userAnswer?.correctAnswer === answer ? "green" : "",

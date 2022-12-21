@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import context from "../context/context"
+import "./ComponentsStyle.css"
 
 const PlayerInput = () => {
   const { playerName, setPlayerName } = useContext(context)
@@ -14,6 +15,7 @@ const PlayerInput = () => {
   return (
     <>
       <input
+        className="player-name"
         type="text"
         placeholder="Player name"
         onChange={handleChange}

@@ -8,6 +8,7 @@ import {
   COUNTDOWN,
 } from "../QuizConfig"
 import { QuestionCard } from "../components/Questioncard"
+import "./PagesStyle.css"
 
 export type AnswerType = {
   question: string
@@ -136,19 +137,25 @@ export const Quiz = () => {
 
   return (
     <div>
-      <h3>Player: {player}</h3>
-
       {!gameOver ? <p>Score: {score}</p> : null}
 
       {pauseTime ? (
-        <h3>{pauseCountDown}</h3>
+        <h3 className="three-sec">{pauseCountDown}</h3>
       ) : (
         <>
-          {!gameOver && <h3>Time left: {questionCountdown}</h3>}
+          <div className="player-time-container">
+            <h3 className="player">Player: {player}</h3>
+            {!gameOver && (
+              <h3 className="time-left">Time left: {questionCountdown}</h3>
+            )}
+          </div>
 
           {!category && (
             <>
-              <select onChange={(e) => setCategory(e.target.value)}>
+              <select
+                className="select"
+                onChange={(e) => setCategory(e.target.value)}
+              >
                 <option>Select Category</option>
                 {randomCategories.slice(0, 3).map((selections, index) => (
                   <option value={selections.id} key={index}>
@@ -163,7 +170,10 @@ export const Quiz = () => {
 
       {!difficulty && (
         <>
-          <select onChange={(e) => setDifficulty(e.target.value)}>
+          <select
+            className="select"
+            onChange={(e) => setDifficulty(e.target.value)}
+          >
             <option>Select Difficulty</option>
             {difficultySelections.map((selections, index) => (
               <option value={selections.name} key={index}>
@@ -177,14 +187,16 @@ export const Quiz = () => {
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <>
           {difficulty && category ? (
-            <button onClick={startQuiz}>Start</button>
+            <button className="start" onClick={startQuiz}>
+              Start
+            </button>
           ) : null}
         </>
       ) : null}
 
       {loading ? <p>Loading question.....</p> : null}
 
-      {!loading && !gameOver && (
+      {!loading && !gameOver && !pauseTime && (
         <QuestionCard
           questionNr={number + 1}
           question={questions[number].question}
@@ -199,8 +211,17 @@ export const Quiz = () => {
       {!gameOver &&
       !loading &&
       userAnswers.length === number + 1 &&
-      number !== TOTAL_QUESTIONS - 1 ? (
-        <button onClick={handleNext}>Next question</button>
+      number !== TOTAL_QUESTIONS - 1 &&
+      category ? (
+        <button className="next-btn" onClick={handleNext}>
+          Next question
+        </button>
+      ) : null}
+
+      {!gameOver && !loading && questionCountdown === 0 ? (
+        <button className="next-btn" onClick={handleNext}>
+          Next question
+        </button>
       ) : null}
     </div>
   )

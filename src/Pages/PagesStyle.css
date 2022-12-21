@@ -1,0 +1,87 @@
+.App {
+  text-align: center;
+}
+
+button:hover {
+  background-color: rgba(138, 43, 226, .5);
+}
+
+button {
+  border: none;
+  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
+}
+
+/* Home ------------> */
+
+h1 {
+  font-family: 'Rubik Vinyl', cursive;
+  color: black;
+  text-shadow: 1px 1px 2px rgb(255, 0, 195), 0 0 1em blue, 0 0 0.2em blue;
+}
+
+.text-container {
+  border: 2px solid black;
+  margin: 0 25vh;
+  border-radius: 5px;
+  background-color: rgba(138, 43, 226, .1);
+  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
+}
+
+.text-container p {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.insert-name {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.player-button {
+border-radius: 3px;
+font-weight: bold;
+}
+
+/* Quiz -------------> */
+
+.player {
+  text-align: center;
+}
+
+.player-time-container {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+  margin: 0;
+}
+
+.select {
+  margin: 21vh 2vh 0 0;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
+  font-size: 20px;
+}
+
+.start {
+margin-top: 21vh;
+border: none;
+border-radius: 5px;
+padding: 10px;
+font-weight: bold;
+font-size: 50px;
+box-shadow: 10px 8px 3px rgba(90, 69, 80, .8);
+}
+
+.three-sec {
+  font-size: 50px;
+  margin-top: 20vh;
+}
+
+.next-btn {
+  border-radius: 3px;
+  font-weight: bold;
+}

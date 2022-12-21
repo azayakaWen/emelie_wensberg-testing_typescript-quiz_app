@@ -1,0 +1,37 @@
+/* PlayerInput ---------> */
+.player-name {
+  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
+  margin-right: 20px;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+/* QuestionCard --------> */
+
+.amount-questions {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.question-container {
+  border: 2px solid black;
+  margin: 0 50vh 3vh 50vh;
+  padding: 3vh;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px rgba(90, 69, 80, .8);
+}
+ .answers {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+ }
+
+ .btn-answer {
+  margin: 1vh 15vh;
+  border-radius: 3px;
+ }
+
+ .btn-answer:hover {
+  background-color: rgba(138, 43, 226, .5);
+ }
