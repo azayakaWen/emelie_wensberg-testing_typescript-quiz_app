@@ -47,7 +47,11 @@ const Home = () => {
       <context.Provider value={{ playerName, setPlayerName }}>
         <PlayerInput />
 
-        <button className="player-button" onClick={handleClick}>
+        <button
+          className="player-button"
+          onClick={handleClick}
+          disabled={!playerName}
+        >
           Continue
         </button>
       </context.Provider>
