@@ -1,6 +1,4 @@
 import { useState } from "react"
-import PlayerInput from "../components/PlayerInput"
-import context from "../context/context"
 import "./PagesStyle.css"
 
 const Home = () => {
@@ -9,6 +7,13 @@ const Home = () => {
 
   // To fix Eslint issue
   console.log(updatedPlayerName)
+
+  const handleChange = (e: {
+    // Handel the change in the input field
+    target: { value: React.SetStateAction<string> }
+  }) => {
+    setPlayerName(e.target.value)
+  }
 
   const handleClick = () => {
     // "name" stores input field value in local storage and take you to quiz page
@@ -44,17 +49,21 @@ const Home = () => {
 
       <p className="insert-name">Please insert player name to start:</p>
 
-      <context.Provider value={{ playerName, setPlayerName }}>
-        <PlayerInput />
+      <input
+        className="player-name"
+        type="text"
+        placeholder="Player name"
+        onChange={handleChange}
+        value={playerName}
+      />
 
-        <button
-          className="player-button"
-          onClick={handleClick}
-          disabled={!playerName}
-        >
-          Continue
-        </button>
-      </context.Provider>
+      <button
+        className="player-button"
+        onClick={handleClick}
+        disabled={!playerName}
+      >
+        Continue
+      </button>
     </div>
   )
 }

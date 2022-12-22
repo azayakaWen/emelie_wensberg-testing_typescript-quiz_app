@@ -40,6 +40,14 @@ h1 {
   font-weight: bold;
 }
 
+.player-name {
+  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
+  margin-right: 20px;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
 .player-button {
 border-radius: 3px;
 font-weight: bold;

@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import PlayerInput from "../../Pages/Home"
+import Home from "../../Pages/Home"
 
 test("playername input should change", () => {
-  render(<PlayerInput />)
+  render(<Home />)
   const playernameInputEl = screen.getByPlaceholderText(/Player name/i)
   const testValue = "test"
 
