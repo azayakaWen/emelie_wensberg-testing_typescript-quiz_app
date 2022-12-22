@@ -1,12 +1,9 @@
 import { useState } from "react"
 import PlayerInput from "../components/PlayerInput"
-import { useNavigate } from "react-router-dom"
 import context from "../context/context"
 import "./PagesStyle.css"
 
 const Home = () => {
-  const navigate = useNavigate()
-
   const [playerName, setPlayerName] = useState("")
   const [updatedPlayerName, setUpdatedPlayerName] = useState(playerName)
 
@@ -17,7 +14,7 @@ const Home = () => {
     // "name" stores input field value in local storage and take you to quiz page
     localStorage.setItem("user", JSON.stringify(playerName))
     setUpdatedPlayerName(playerName)
-    navigate("/quiz")
+    window.location.href = "/quiz"
   }
 
   return (
