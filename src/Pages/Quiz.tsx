@@ -13,6 +13,7 @@ import { QuestionCard } from "../components/Questioncard"
 import "./PagesStyle.css"
 
 export type AnswerType = {
+  id: number
   question: string
   answer: string
   correct: boolean
@@ -33,7 +34,7 @@ export const Quiz = () => {
   const [pauseTime, setPauseTime] = useState<boolean>(false)
   const [pauseCountDown, setPauseCountdown] = useState<number>(3)
   const [questionCountdown, setQuestionCountdown] = useState<number>(COUNTDOWN)
-  const [correctAnswerInRow, setCorrectAnswerInRow] = useState<number>(0)
+  const [correctAnswerInRow, setCorrectAnswerInRow] = useState<number>(1)
 
   //Give random value from list of categories
   const randomCategories = categorySelections.sort(() => Math.random() - 0.5)
@@ -95,13 +96,17 @@ export const Quiz = () => {
 
       const correct = questions[number].correctAnswer === answer
 
+      setCorrectAnswerInRow(
+        (prevCorrectAnswersInRow) => prevCorrectAnswersInRow + 1
+      )
+
       setQuestionClock(false)
 
       if (correct) {
         const requiredCorrectAnswersInRow = 3
 
         const seconds = questionCountdown
-        const difficulityPoints = POINTS_DIFFICULIY[difficulty]
+        const difficultyPoint = POINTS_DIFFICULIY[difficulty]
 
         const guessedAnswers =
           correct && correctAnswerInRow >= requiredCorrectAnswersInRow
@@ -111,8 +116,10 @@ export const Quiz = () => {
 
         setScore(
           (prev) =>
-            prev + ScoreCalc(seconds, difficulityPoints, guessedAnswers, bonus)
+            prev + ScoreCalc(seconds, difficultyPoint, guessedAnswers, bonus)
         )
+
+        console.log(correctAnswerInRow)
 
         setCategory("")
       }
@@ -155,28 +162,23 @@ export const Quiz = () => {
 
   return (
     <div>
-      {/* Sore in the end of the game */}
-      {!gameOver && userAnswers.length >= TOTAL_QUESTIONS && (
+      {!gameOver && (
+        // userAnswers.length >= TOTAL_QUESTIONS &&
         <p>Score: {score}</p>
       )}
 
       {pauseTime ? (
-        // Countdown between questions
         <h3 className="three-sec">{pauseCountDown}</h3>
       ) : (
         <>
           <div className="player-time-container">
-            {/* Show player name */}
             <h3 className="player">Player: {player}</h3>
-
             {!gameOver && (
-              // Countdown for every question
               <h3 className="time-left">Time left: {questionCountdown}</h3>
             )}
           </div>
 
           {!category && userAnswers.length < TOTAL_QUESTIONS ? (
-            // Select category before and during the game
             <>
               <select
                 className="select"
@@ -195,7 +197,6 @@ export const Quiz = () => {
       )}
 
       {!difficulty && (
-        // Select difficulty before the game
         <>
           <select
             className="select"
@@ -214,7 +215,6 @@ export const Quiz = () => {
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <>
           {difficulty && category ? (
-            // Start button
             <button className="start" onClick={startQuiz}>
               Start
             </button>
@@ -222,10 +222,8 @@ export const Quiz = () => {
         </>
       ) : null}
 
-      {/* loading befor the questions */}
       {loading ? <p>Loading question.....</p> : null}
 
-      {/* The questions and answers */}
       {!loading && !gameOver && !pauseTime && (
         <QuestionCard
           questionNr={number + 1}
@@ -238,7 +236,6 @@ export const Quiz = () => {
         />
       )}
 
-      {/* Next question button */}
       {!gameOver &&
       !loading &&
       userAnswers.length === number + 1 &&
