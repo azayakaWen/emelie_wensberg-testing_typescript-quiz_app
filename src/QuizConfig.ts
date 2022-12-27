@@ -18,6 +18,22 @@ export const categorySelections = [
   { id: 'sport_and_leisure', name: 'Sport & Leisure' }
 ]
 
+export const POINTS_DIFFICULIY: any = {
+  easy: 1,
+  medium: 3,
+  hard: 5,
+  incorrect: 0
+}
+
+export function ScoreCalc(seconds: number, difficultyPoint: number,
+  guessedAnswers: string | number | any,
+  combo: number
+  ): number {
+  let bonus = combo > 2 ? combo : 0;
+  let result = seconds * difficultyPoint
+  + guessedAnswers * bonus;
+  return result;
+}
 
 export const TOTAL_QUESTIONS: number = 9
 export const URL = "https://the-trivia-api.com/api/questions?"
