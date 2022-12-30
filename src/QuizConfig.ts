@@ -1,3 +1,4 @@
+//Different difficultys to select
 export const difficultySelections = [
   { id: 'EASY', name: 'easy' },
   { id: 'MEDIUM', name: 'medium' },
@@ -5,6 +6,7 @@ export const difficultySelections = [
   { id: 'RANDOM', name: 'random' }
 ]
 
+//Different categorys to select
 export const categorySelections = [
   { id: 'arts_and_literature', name: 'Arts & Literature' },
   { id: 'film_and_tv', name: 'Film & TV' },
@@ -18,6 +20,7 @@ export const categorySelections = [
   { id: 'sport_and_leisure', name: 'Sport & Leisure' }
 ]
 
+//Point system for selected difficulty
 export const POINTS_DIFFICULIY: any = {
   easy: 1,
   medium: 3,
@@ -25,11 +28,12 @@ export const POINTS_DIFFICULIY: any = {
   incorrect: 0
 }
 
+//Function to calculate the score
 export function ScoreCalc(seconds: number, difficultyPoint: number,
   guessedAnswers: string | number | any,
   combo: number
   ): number {
-  let bonus = combo > 2 ? combo : 0;
+  let bonus = combo > 2 ? combo : 0
   let result = seconds * difficultyPoint
   + guessedAnswers * bonus;
   return result;

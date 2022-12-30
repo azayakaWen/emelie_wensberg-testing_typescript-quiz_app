@@ -34,7 +34,6 @@ export const Quiz = () => {
   const [pauseTime, setPauseTime] = useState<boolean>(false)
   const [pauseCountDown, setPauseCountdown] = useState<number>(3)
   const [questionCountdown, setQuestionCountdown] = useState<number>(COUNTDOWN)
-  const [correctAnswerInRow, setCorrectAnswerInRow] = useState<number>(1)
 
   //Give random value from list of categories
   const randomCategories = categorySelections.sort(() => Math.random() - 0.5)
@@ -96,30 +95,28 @@ export const Quiz = () => {
 
       const correct = questions[number].correctAnswer === answer
 
-      setCorrectAnswerInRow(
-        (prevCorrectAnswersInRow) => prevCorrectAnswersInRow + 1
-      )
-
       setQuestionClock(false)
 
       if (correct) {
-        const requiredCorrectAnswersInRow = 3
-
         const seconds = questionCountdown
         const difficultyPoint = POINTS_DIFFICULIY[difficulty]
 
-        const guessedAnswers =
-          correct && correctAnswerInRow >= requiredCorrectAnswersInRow
+        const guessedAnswers = userAnswers.filter(
+          (answer) => answer.correct
+        ).length
 
-        const bonus =
-          requiredCorrectAnswersInRow > 2 ? requiredCorrectAnswersInRow : 0
+        const bonus = userAnswers.reduce((acc, answer) => {
+          if (answer.correct) {
+            return acc + 1
+          } else {
+            return 0
+          }
+        }, 0)
 
         setScore(
           (prev) =>
             prev + ScoreCalc(seconds, difficultyPoint, guessedAnswers, bonus)
         )
-
-        console.log(correctAnswerInRow)
 
         setCategory("")
       }
