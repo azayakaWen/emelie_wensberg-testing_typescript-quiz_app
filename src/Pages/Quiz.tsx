@@ -105,7 +105,7 @@ export const Quiz = () => {
           (answer) => answer.correct
         ).length
 
-        const bonus = userAnswers.reduce((acc, answer) => {
+        const combo = userAnswers.reduce((acc, answer) => {
           if (answer.correct) {
             return acc + 1
           } else {
@@ -115,7 +115,7 @@ export const Quiz = () => {
 
         setScore(
           (prev) =>
-            prev + ScoreCalc(seconds, difficultyPoint, guessedAnswers, bonus)
+            prev + ScoreCalc(seconds, difficultyPoint, guessedAnswers, combo)
         )
 
         setCategory("")
