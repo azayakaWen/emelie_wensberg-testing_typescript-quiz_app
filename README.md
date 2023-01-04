@@ -13,20 +13,20 @@ Use npm test to run tests
 
 ## Tests in this project
 
-# BDD test
+- BDD test
 
-# Unit test
+- Unit test
 
 ## Diagrams that can be found in this project under src/diagram
 
-# UML Sequence Diagram
+- UML Sequence Diagram
 
-# UML Class Diagram
+- UML Class Diagram
 
 ## Design principles tried to use
 
-# YAGNI
+- YAGNI
 
-# KISS
+- KISS
 
-# DRY
+- DRY
