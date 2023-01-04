@@ -14,6 +14,8 @@ const randomDifficulties = (difficulty: string) => {
 }
 
 export const fetchQuizQuestions =async (difficulty: Difficulty, categories: Category) => {
+
+  try {
   const endpoint = `https://the-trivia-api.com/api/questions?categories=${categories}&limit=${Config.totalQuestions}&difficulty=${randomDifficulties(difficulty)}`
   const data = await (await fetch(endpoint)).json()
   console.log(data)
@@ -22,4 +24,8 @@ export const fetchQuizQuestions =async (difficulty: Difficulty, categories: Cate
     answers: shuffleArray([...question.incorrectAnswers, question.correctAnswer]
       )
   }))
+} catch(error) {
+  console.log(error)
+  return error
+}
 }
