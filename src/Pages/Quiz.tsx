@@ -159,11 +159,6 @@ export const Quiz = () => {
 
   return (
     <div>
-      {!gameOver && (
-        // userAnswers.length >= TOTAL_QUESTIONS &&
-        <p>Score: {score}</p>
-      )}
-
       {pauseTime ? (
         <h3 className="three-sec">{pauseCountDown}</h3>
       ) : (
@@ -207,6 +202,10 @@ export const Quiz = () => {
             ))}
           </select>
         </>
+      )}
+
+      {!gameOver && userAnswers.length >= TOTAL_QUESTIONS && (
+        <p className="score">Score: {score}</p>
       )}
 
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
