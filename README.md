@@ -6,10 +6,10 @@ Rules for the quiz is availible in the application.
 
 ## How to get started
 
-Download the project
-Run npm install to install necessary packages (like react-router-dom)
-Use npm start to open an localhost
-Use npm test to run tests
+- Download the project
+- Run npm install to install necessary packages (like react-router-dom)
+- Use npm start to open an localhost
+- Use npm test to run tests
 
 ## Tests in this project
 
