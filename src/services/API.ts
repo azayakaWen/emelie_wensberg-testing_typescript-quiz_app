@@ -18,7 +18,6 @@ export const fetchQuizQuestions =async (difficulty: Difficulty, categories: Cate
   try {
   const endpoint = `https://the-trivia-api.com/api/questions?categories=${categories}&limit=${Config.totalQuestions}&difficulty=${randomDifficulties(difficulty)}`
   const data = await (await fetch(endpoint)).json()
-  console.log(data)
   return data.map((question: Question) => ({
     ...question,
     answers: shuffleArray([...question.incorrectAnswers, question.correctAnswer]
