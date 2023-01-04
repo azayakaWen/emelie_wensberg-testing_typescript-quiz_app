@@ -1,5 +1,4 @@
-import { shuffleArray } from "../utils"
-import Config from "../QuizConfig"
+import Config, { shuffleArray } from "../QuizConfig"
 import { Difficulty, Category } from "../enums/enums"
 import {Question} from "../interfaces/QuestionInterface"
 

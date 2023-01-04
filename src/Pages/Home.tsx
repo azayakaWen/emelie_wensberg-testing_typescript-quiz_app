@@ -5,7 +5,7 @@ const Home = () => {
   const [playerName, setPlayerName] = useState("")
   const [updatedPlayerName, setUpdatedPlayerName] = useState(playerName)
 
-  // To fix Eslint issue
+  // To fix Eslint error
   console.log(updatedPlayerName)
 
   const handleChange = (e: {

@@ -1,3 +1,7 @@
+//Random answers
+export const shuffleArray = (array: any[]) =>
+[...array].sort(() => Math.random() - 0.5)
+
 //Different difficultys to select
 export const difficultySelections = [
   { id: 'EASY', name: 'easy' },
