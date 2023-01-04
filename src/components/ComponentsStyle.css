@@ -1,3 +1,12 @@
+/* PlayerInput ---------> */
+.player-name {
+  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
+  margin-right: 20px;
+  border: none;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
 /* QuestionCard --------> */
 
 .amount-questions {
@@ -9,8 +18,9 @@
   border: 2px solid black;
   margin: 0 50vh 3vh 50vh;
   padding: 3vh;
-  border-radius: 5px;
+  border-radius: 60px;
   box-shadow: 10px 10px 5px rgba(90, 69, 80, .8);
+  background-color: rgba(138, 43, 226, .1);
 }
  .answers {
   display: grid;

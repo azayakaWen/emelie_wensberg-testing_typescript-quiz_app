@@ -22,7 +22,7 @@ h1 {
 .text-container {
   border: 2px solid black;
   margin: 0 25vh;
-  border-radius: 5px;
+  border-radius: 60px;
   background-color: rgba(138, 43, 226, .1);
   box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
 }
@@ -40,14 +40,6 @@ h1 {
   font-weight: bold;
 }
 
-.player-name {
-  box-shadow: 5px 8px 5px rgba(90, 69, 80, .8);
-  margin-right: 20px;
-  border: none;
-  border-radius: 3px;
-  font-weight: bold;
-}
-
 .player-button {
 border-radius: 3px;
 font-weight: bold;
@@ -62,7 +54,7 @@ font-weight: bold;
 .player-time-container {
   display: flex;
   justify-content: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin: 0;
 }
 
@@ -75,9 +67,9 @@ font-weight: bold;
 }
 
 .start {
-margin-top: 21vh;
+margin-top: 10vh;
 border: none;
-border-radius: 5px;
+border-radius: 30px;
 padding: 10px;
 font-weight: bold;
 font-size: 50px;
@@ -91,5 +83,10 @@ box-shadow: 10px 8px 3px rgba(90, 69, 80, .8);
 
 .next-btn {
   border-radius: 3px;
+  font-weight: bold;
+}
+
+.score {
+  font-size: 20px;
   font-weight: bold;
 }
